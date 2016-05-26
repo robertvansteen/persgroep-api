@@ -16,8 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        API::error(function(ModelNotFoundException $exception)
-        {
+        API::error(function(ModelNotFoundException $exception) {
             return Response::create(['error' => 'Model not found.'], 404);
         });
     }
