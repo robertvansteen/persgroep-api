@@ -23,7 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Story::class, function (Faker\Generator $faker) {
     return [
         'title'   => $faker->sentence,
-        'body'    => $faker->paragraph,
+        'body'    => $faker->paragraph(20),
         'user_id' => $faker->numberBetween(1, 5),
     ];
 });
