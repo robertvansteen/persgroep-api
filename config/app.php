@@ -165,6 +165,7 @@ return [
          * Third party providers
          */
         Barryvdh\Cors\ServiceProvider::class,
+        willvincent\Feeds\FeedsServiceProvider::class,
 
     ],
 
@@ -212,7 +213,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'API' => Dingo\Api\Facade\API::class,
-
+        'Feeds' => willvincent\Feeds\Facades\FeedsFacade::class,
     ],
 
 ];
