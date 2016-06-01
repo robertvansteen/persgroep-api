@@ -1,6 +1,6 @@
 <?php
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase
+    class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
      * The base URL to use while testing the application.
@@ -20,6 +20,20 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        $this->baseUrl = env('APP_URL', $this->baseUrl);
+
         return $app;
+    }
+
+    /**
+     * Set API url as base url.
+     *
+     * @return this
+     */
+    public function api()
+    {
+        $this->baseUrl = $this->baseUrl . '/' . env('API_PREFIX');
+
+        return $this;
     }
 }
