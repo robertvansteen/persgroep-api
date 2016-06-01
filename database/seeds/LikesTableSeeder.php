@@ -1,6 +1,8 @@
 <?php
 
+use App\Like;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\QueryException;
 
 class LikesTableSeeder extends Seeder
 {
@@ -12,16 +14,20 @@ class LikesTableSeeder extends Seeder
     public function run()
     {
         DB::table('likes')->truncate();
-        $likes = factory(App\Like::class, 250)->make();
+        $likes = factory(Like::class, 250)->make();
 
         foreach ($likes as $like) {
-            repeat:
-            try {
-                $like->save();
-            } catch (\Illuminate\Database\QueryException $e) {
-                $like = factory(App\Like::class)->make();
-                goto repeat;
-            }
+            $this->seedLike($like);
+        }
+    }
+
+    public function seedLike(Like $like)
+    {
+        try {
+            $like->save();
+        } catch(QueryException $e) {
+            $like = factory(Like::class)->make();
+            $this->seedLike($like);
         }
     }
 }
