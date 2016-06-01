@@ -23,3 +23,6 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+
+after_success:
+  - wget $SUCCESS_HOOK
