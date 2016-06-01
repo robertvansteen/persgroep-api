@@ -1,8 +1,6 @@
-languages:
-   Ruby: false
-   JavaScript: false
-   Python: false
-   PHP: true
-exclude_paths:
-  - storage/**/*
-  - vendor/**/*
+engines:
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
