@@ -23,4 +23,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Define the stories relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\HasMany
+     */
+    public function stories() {
+        return $this->hasMany('App\Story');
+    }
+
+    /**
+     * Define the likes relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\HasMany
+     */
+    public function likes() {
+        return $this->hasMany('App\Like');
+    }
 }
