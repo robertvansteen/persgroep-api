@@ -24,7 +24,7 @@ class StoryApiTest extends TestCase
      */
     public function it_should_return_a_collection_of_stories()
     {
-        $stories = factory(App\Story::class, 2)->create();
+        factory(App\Story::class, 2)->create();
 
         $this->api()->get('stories')
             ->seeJson([
