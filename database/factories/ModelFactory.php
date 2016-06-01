@@ -24,13 +24,13 @@ $factory->define(App\Story::class, function (Faker\Generator $faker) {
     return [
         'title'   => $faker->sentence,
         'body'    => $faker->paragraph(20),
-        'user_id' => factory(App\User::class)->create()->id
+        'user_id' => factory(App\User::class)->create()->id,
     ];
 });
 
 $factory->define(App\Like::class, function (Faker\Generator $faker) {
     return [
-        'user_id'   => $faker->numberBetween(1, 25),
-        'story_id'  => $faker->numberBetween(1, 100),
+        'user_id'  => factory(App\User::class)->create()->id,
+        'story_id' => factory(App\Story::class)->create()->id,
     ];
 });
