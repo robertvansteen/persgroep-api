@@ -6,6 +6,8 @@ php:
 
 addons:
   mariadb: '10.0'
+  code_climate:
+        repo_token: f40548b34916a3abaae2a41c65892272fde61d0885efb93b9e2f3e15dc44b68a
 
 env:
   global:
