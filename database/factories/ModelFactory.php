@@ -22,9 +22,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Story::class, function (Faker\Generator $faker) {
     return [
-        'title'   => $faker->sentence,
-        'body'    => $faker->paragraph(20),
-        'user_id' => factory(App\User::class)->create()->id,
+        'title'     => $faker->sentence,
+        'body'      => $faker->paragraph(20),
+        'image_url' => 'https://unsplash.it/1024/1024?image=' . $faker->numberBetween(1, 1000),
+        'user_id'   => factory(App\User::class)->create()->id,
     ];
 });
 
