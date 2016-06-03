@@ -15,7 +15,10 @@ class StoryController extends Controller
 
     public function index()
     {
-        $stories = Story::score()->orderBy('score', 'DESC')->paginate(25);
+        $stories = Story::score()
+            ->with('author')
+            ->orderBy('score', 'DESC')
+            ->paginate(25);
 
         return $stories;
     }
