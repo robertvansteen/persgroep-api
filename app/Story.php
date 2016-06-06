@@ -27,6 +27,16 @@ class Story extends Model
 	];
 
 	/**
+	 * The attributes that should be casted to native types.
+	 *
+	 * @var array
+	 */
+	protected $casts = [
+		'id' => 'string',
+		'likes' => 'boolean',
+	];
+
+	/**
 	 * Define the user (author) relationship.
 	 *
 	 * @return \Illuminate\Database\Eloquent\BelongsTo
@@ -63,5 +73,17 @@ class Story extends Model
 			->leftJoin('stories AS user_stories', 'users.id', '=', 'user_stories.user_id')
 			->leftJoin('likes AS user_stories_likes', 'user_stories.id', '=', 'user_stories_likes.story_id')
 			->groupBy('stories.id');
+	}
+
+	/**
+	 * Scope the query to include the like for the current user.
+	 *
+	 * @param  Illuminate\Database\Query $query
+	 * @return  Illuminate\Database\Query
+	 */
+	public function scopeLikes($query) {
+		return $query->with(['likes' => function ($query) {
+			$query->where('user_id', '1');
+		}]);
 	}
 }

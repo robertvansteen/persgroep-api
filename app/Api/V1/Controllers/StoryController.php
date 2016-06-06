@@ -16,9 +16,17 @@ class StoryController extends Controller
     public function index()
     {
         $stories = Story::score()
+            ->likes()
             ->with('author')
             ->orderBy('score', 'DESC')
             ->paginate(25);
+
+        // TODO: Refactor this to somewhere.
+        $stories->map(function($story) {
+            $story->liked = ($story->likes->count() > 0);
+            unset($story->likes);
+            return $story;
+        });
 
         return $stories;
     }
