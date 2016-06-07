@@ -4,6 +4,14 @@ use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
+
+    /**
+     * Amount of users to generate.
+     *
+     * @type Number
+     */
+    protected $amount = 500;
+
     /**
      * Run the database seeds.
      *
@@ -12,6 +20,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
-        factory(App\User::class, 25)->create();
+        $this->command->info('Seeding ' . $this->amount . ' users...');
+        factory(App\User::class, $this->amount)->create();
     }
 }
