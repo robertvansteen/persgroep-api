@@ -25,13 +25,19 @@ $factory->define(App\Story::class, function (Faker\Generator $faker) {
         'title'     => $faker->sentence,
         'body'      => $faker->paragraph(20),
         'image_url' => 'https://unsplash.it/1024/1024?image=' . $faker->numberBetween(1, 1000),
-        'user_id'   => factory(App\User::class)->create()->id,
+        'user_id'   => function () {
+            return factory(App\User::class)->create()->id;
+        }
     ];
 });
 
 $factory->define(App\Like::class, function (Faker\Generator $faker) {
     return [
-        'user_id'  => factory(App\User::class)->create()->id,
-        'story_id' => factory(App\Story::class)->create()->id,
+        'user_id'  => function () {
+            return factory(App\User::class)->create()->id;
+        },
+        'story_id' => function () {
+            return factory(App\Story::class)->create()->id;
+        },
     ];
 });
