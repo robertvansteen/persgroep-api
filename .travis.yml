@@ -14,11 +14,6 @@ env:
     - APP_ENV=testing
     - APP_DEBUG=true
     - APP_KEY=xxxx
-    - DB_DATABASE=test
-    - DB_USERNAME=root
-
-before_install:
-  - mysql -e "create database IF NOT EXISTS test;" -uroot
 
 before_script:
   - composer install --no-interaction
