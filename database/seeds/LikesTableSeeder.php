@@ -82,10 +82,10 @@ class LikesTableSeeder extends Seeder
      *
      * @return Illuminate\Database\Eloquent\Collection | App\Like
      */
-    protected function makeLikes($story_id, $amount = 1)
+    protected function makeLikes($storyId, $amount = 1)
     {
         return factory(App\Like::class, $amount)->make([
-            'story_id' => $story_id,
+            'story_id' => $storyId,
             'user_id'  => mt_rand(0, $this->userCount),
         ]);
     }
