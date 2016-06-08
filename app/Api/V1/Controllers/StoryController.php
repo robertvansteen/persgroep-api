@@ -15,8 +15,10 @@ class StoryController extends Controller
 
     public function index()
     {
+        $user = $this->auth->user();
+
         $stories = Story::score()
-            ->likes()
+            ->likes($user)
             ->with('author')
             ->orderBy('score', 'DESC')
             ->paginate(25);
