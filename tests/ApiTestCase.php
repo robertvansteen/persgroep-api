@@ -12,7 +12,7 @@ class ApiTestCase extends TestCase
 	 * @param String userId
 	 * @return this
 	 */
-	protected function authenticate($userId = 1)
+	public function authenticate($userId = 1)
 	{
 		$user = User::find($userId);
 		$token = JWTAuth::fromUser($user);
@@ -30,11 +30,11 @@ class ApiTestCase extends TestCase
 	 *
 	 * @return this
 	 */
-	public function get($url, array $headers = [])
+	public function get($uri, array $headers = [])
 	{
 		$headers = array_merge($headers, $this->headers);
 
-		return parent::get($url, $headers);
+		return parent::get($this->getUri($uri), $headers);
 	}
 
 	/**
@@ -50,7 +50,18 @@ class ApiTestCase extends TestCase
 	{
 		$headers = array_merge($headers, $this->headers);
 
-		return parent::post($uri, $data, $headers);
+		return parent::post($this->getUri($uri), $data, $headers);
+	}
+
+	/**
+	 * Get URI with API prefix.
+	 *
+	 * @param String $uri
+	 * @return String
+	 */
+	protected function getUri($uri)
+	{
+		return '/' . env('API_PREFIX') . $uri;
 	}
 
 }

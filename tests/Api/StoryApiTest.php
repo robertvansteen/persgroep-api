@@ -13,7 +13,7 @@ class StoryApiTest extends ApiTestCase
      */
     public function it_should_return_an_empty_collection_of_stories_if_there_is_none()
     {
-        $this->api()->get('stories')
+        $this->get('/stories')
             ->seeJson([
                 'total' => 0,
             ]);
@@ -26,7 +26,7 @@ class StoryApiTest extends ApiTestCase
     {
         factory(App\Story::class, 2)->create();
 
-        $this->api()->get('stories')
+        $this->get('/stories')
             ->seeJson([
                 'total' => 2,
             ]);
@@ -39,7 +39,7 @@ class StoryApiTest extends ApiTestCase
     {
         $story = factory(App\Story::class)->create();
 
-        $this->api()->get('stories')
+        $this->get('/stories')
             ->seeJson([
                 'total' => 1,
                 'liked' => false
@@ -58,7 +58,7 @@ class StoryApiTest extends ApiTestCase
             'story_id' => $story->id,
         ]);
 
-        $this->api()->authenticate()->get('stories')
+        $this->authenticate()->get('/stories')
             ->seeJson([
                 'total'  => 1,
                 'liked'  => true,

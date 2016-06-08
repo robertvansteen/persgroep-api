@@ -17,7 +17,7 @@ class AuthApiTest extends ApiTestCase
 
 		$user = factory(App\User::class)->create($credentials);
 
-		$this->api()->post('/authenticate', $credentials)
+		$this->post('/authenticate', $credentials)
 			 ->seeJsonStructure(['token']);
 	}
 
@@ -28,7 +28,7 @@ class AuthApiTest extends ApiTestCase
 	{
 		$user = factory(App\User::class)->create();
 
-		$this->api()->post('/authenticate', ['email' => 'foo', 'password' => 'bar'])
+		$this->post('/authenticate', ['email' => 'foo', 'password' => 'bar'])
 			 ->seeStatusCode(401);
 	}
 
