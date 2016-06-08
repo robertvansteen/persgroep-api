@@ -14,6 +14,9 @@
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
+    // Authentication
+    $api->post('authenticate', 'App\Api\V1\Controllers\AuthenticationController@authenticate');
+
     $api->resource('stories', 'App\Api\V1\Controllers\StoryController');
     $api->resource('stories.likes', 'App\Api\V1\Controllers\StoryLikeController');
     $api->delete('stories/{stories}/likes', 'App\Api\V1\Controllers\StoryLikeController@destroy');
