@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class StoryApiTest extends TestCase
+class StoryApiTest extends ApiTestCase
 {
     use DatabaseMigrations;
 
@@ -29,6 +29,39 @@ class StoryApiTest extends TestCase
         $this->api()->get('stories')
             ->seeJson([
                 'total' => 2,
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_tell_if_you_didnt_liked_the_story()
+    {
+        $story = factory(App\Story::class)->create();
+
+        $this->api()->get('stories')
+            ->seeJson([
+                'total' => 1,
+                'liked' => false
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_tell_if_you_liked_the_story()
+    {
+        $user = factory(App\User::class)->create();
+        $story = factory(App\Story::class)->create();
+        $like = factory(App\Like::class)->create([
+            'user_id'  => $user->id,
+            'story_id' => $story->id,
+        ]);
+
+        $this->api()->authenticate()->get('stories')
+            ->seeJson([
+                'total'  => 1,
+                'liked'  => true,
             ]);
     }
 }
