@@ -65,11 +65,11 @@ class Story extends Model
 			->select([
 				'stories.*',
 				DB::raw(
-				'COUNT(DISTINCT(likes.id)) + (COUNT(user_stories_likes.story_id) * 0.2) AS score'
+				'COUNT(DISTINCT(story_likes.id)) + (COUNT(user_stories_likes.story_id) * 0.2) AS score'
 				)
 			])
-			->leftJoin('likes', 'stories.id', '=', 'likes.story_id')
-			->leftJoin('users', 'likes.user_id', '=', 'users.id')
+			->leftJoin('likes AS story_likes', 'stories.id', '=', 'story_likes.story_id')
+			->leftJoin('users', 'story_likes.user_id', '=', 'users.id')
 			->leftJoin('stories AS user_stories', 'users.id', '=', 'user_stories.user_id')
 			->leftJoin('likes AS user_stories_likes', 'user_stories.id', '=', 'user_stories_likes.story_id')
 			->groupBy('stories.id');
@@ -81,9 +81,9 @@ class Story extends Model
 	 * @param  Illuminate\Database\Query $query
 	 * @return  Illuminate\Database\Query
 	 */
-	public function scopeLikes($query) {
-		return $query->with(['likes' => function ($query) {
-			$query->where('user_id', '1');
+	public function scopeLikes($query, $user) {
+		return $query->with(['likes' => function ($query) use ($user) {
+			$query->where('user_id', $user ? $user->id : null);
 		}]);
 	}
 }

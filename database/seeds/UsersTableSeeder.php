@@ -20,7 +20,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
+
         $this->command->info('Seeding ' . $this->amount . ' users...');
+
+        factory(App\User::class)->create([
+            'email'    => 'studio@rovansteen.nl',
+            'password' => 'test123', 
+        ]);
+
         factory(App\User::class, $this->amount)->create();
     }
 }

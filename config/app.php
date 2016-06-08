@@ -166,6 +166,7 @@ return [
          */
         Barryvdh\Cors\ServiceProvider::class,
         willvincent\Feeds\FeedsServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
     ],
 
@@ -214,6 +215,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'API' => Dingo\Api\Facade\API::class,
         'Feeds' => willvincent\Feeds\Facades\FeedsFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

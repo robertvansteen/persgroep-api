@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -40,5 +41,15 @@ class User extends Authenticatable
      */
     public function likes() {
         return $this->hasMany('App\Like');
+    }
+
+    /**
+     * Mutate the password attribute when set.
+     *
+     * @param String password
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
     }
 }
