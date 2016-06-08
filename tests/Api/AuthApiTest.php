@@ -15,7 +15,7 @@ class AuthApiTest extends ApiTestCase
 	{
 		$credentials = ['email' => 'johndoe@test.com', 'password' => 'test123'];
 
-		$user = factory(App\User::class)->create($credentials);
+		factory(App\User::class)->create($credentials);
 
 		$this->post('/authenticate', $credentials)
 			 ->seeJsonStructure(['token']);
@@ -26,7 +26,7 @@ class AuthApiTest extends ApiTestCase
 	 */
 	public function it_should_fail_with_wrong_credentials()
 	{
-		$user = factory(App\User::class)->create();
+		factory(App\User::class)->create();
 
 		$this->post('/authenticate', ['email' => 'foo', 'password' => 'bar'])
 			 ->seeStatusCode(401);

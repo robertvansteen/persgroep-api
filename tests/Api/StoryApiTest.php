@@ -37,7 +37,7 @@ class StoryApiTest extends ApiTestCase
      */
     public function it_should_tell_if_you_didnt_liked_the_story()
     {
-        $story = factory(App\Story::class)->create();
+        factory(App\Story::class)->create();
 
         $this->get('/stories')
             ->seeJson([
@@ -53,7 +53,7 @@ class StoryApiTest extends ApiTestCase
     {
         $user = factory(App\User::class)->create();
         $story = factory(App\Story::class)->create();
-        $like = factory(App\Like::class)->create([
+        factory(App\Like::class)->create([
             'user_id'  => $user->id,
             'story_id' => $story->id,
         ]);
