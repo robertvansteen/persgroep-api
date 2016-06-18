@@ -16,9 +16,9 @@ class StoryTest extends TestCase
     {
 		factory(App\Story::class)->create();
 
-		$story = Story::score()->first();
+		$story = Story::rawScore()->first();
 
-		$this->assertEquals($story->score, 0);
+		$this->assertEquals($story->raw_score, 0);
     }
 
 
@@ -30,9 +30,9 @@ class StoryTest extends TestCase
 		$story = factory(App\Story::class)->create();
 		factory(App\Like::class)->create(['story_id' => $story->id]);
 
-		$assertStory = Story::score()->first();
+		$assertStory = Story::rawScore()->first();
 
-		$this->assertEquals($assertStory->score, 1.0);
+		$this->assertEquals($assertStory->raw_score, 1.0);
 	}
 
 
@@ -54,10 +54,10 @@ class StoryTest extends TestCase
 
 		factory(App\Like::class)->create(['story_id' => $likerStory->id]);
 
-		$assertStory = Story::score()
+		$assertStory = Story::rawScore()
 			->where('stories.id', '=', $authorStory->id)
 			->first();
 
-		$this->assertEquals($assertStory->score, 1.2);
+		$this->assertEquals($assertStory->raw_score, 1.2);
 	}
 }

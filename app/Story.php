@@ -3,7 +3,6 @@
 namespace App;
 
 use DB;
-use Illuminate\Database\Eloquent\Model;
 
 class Story extends Model
 {
@@ -14,6 +13,7 @@ class Story extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'excerpt',
 		'body',
 	];
 
@@ -23,7 +23,7 @@ class Story extends Model
 	 * @type {Array}
 	 */
 	protected $hidden = [
-		'score',
+		'pivot',
 	];
 
 	/**
@@ -32,8 +32,10 @@ class Story extends Model
 	 * @var array
 	 */
 	protected $casts = [
-		'id' => 'string',
-		'likes' => 'boolean',
+		'id'          => 'string',
+		'score'       => 'float',
+		'likes_count' => 'integer',
+		'liked_count' => 'integer',
 	];
 
 	/**
@@ -55,24 +57,46 @@ class Story extends Model
 	}
 
 	/**
+	 * Define the likes relationship.
+	 *
+	 * @return \Illuminate\Database\Eloquent\HasMany
+	 */
+	public function liked() {
+		return $this->hasMany('App\Like');
+	}
+
+	/**
+	 * Defines the categories relationship.
+	 *
+	 * @return Illuminate\Database\Eloquent\BelongsToMany
+	 */
+	public function categories() {
+		return $this->belongsToMany('App\Category');
+	}
+
+	/**
 	 * Scope the query to show the most popular stories.
 	 *
 	 * @param  Illuminate\Database\Query $query
 	 * @return Illuminate\Database\Query
 	 */
-	public function scopeScore($query) {
+	public function scopeRawScore($query) {
 		return $query
 			->select([
 				'stories.*',
 				DB::raw(
-				'COUNT(DISTINCT(likes.id)) + (COUNT(user_stories_likes.story_id) * 0.2) AS score'
+				'COUNT(DISTINCT(story_likes.id)) + (COUNT(user_stories_likes.story_id) * 0.2) AS raw_score'
 				)
 			])
-			->leftJoin('likes', 'stories.id', '=', 'likes.story_id')
-			->leftJoin('users', 'likes.user_id', '=', 'users.id')
+			->leftJoin('likes AS story_likes', 'stories.id', '=', 'story_likes.story_id')
+			->leftJoin('users', 'story_likes.user_id', '=', 'users.id')
 			->leftJoin('stories AS user_stories', 'users.id', '=', 'user_stories.user_id')
 			->leftJoin('likes AS user_stories_likes', 'user_stories.id', '=', 'user_stories_likes.story_id')
 			->groupBy('stories.id');
+	}
+
+	public function scopePopular($query) {
+		return $query->orderBy('score', 'DESC');
 	}
 
 	/**
@@ -81,9 +105,11 @@ class Story extends Model
 	 * @param  Illuminate\Database\Query $query
 	 * @return  Illuminate\Database\Query
 	 */
-	public function scopeLikes($query) {
-		return $query->with(['likes' => function ($query) {
-			$query->where('user_id', '1');
-		}]);
+	public function scopeWithLikes($query, $user = null) {
+		return $query
+			->withCount('likes')
+			 ->withCount(['liked' => function ($query) use ($user) {
+	 		 	$query->where('user_id', $user ? $user->id : null);
+			}]);
 	}
 }
