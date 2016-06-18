@@ -23,6 +23,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Story::class, function (Faker\Generator $faker) {
     return [
         'title'     => $faker->sentence,
+		'excerpt'   => $faker->paragraph(2),
         'body'      => $faker->paragraph(20),
         'image_url' => 'https://unsplash.it/1024/1024?image=' . $faker->numberBetween(1, 1000),
         'user_id'   => function () {
@@ -40,4 +41,10 @@ $factory->define(App\Like::class, function (Faker\Generator $faker) {
             return factory(App\Story::class)->create()->id;
         },
     ];
+});
+
+$factory->define(App\Category::class, function (Faker\Generator $faker) {
+	return [
+		'name' => $faker->word,
+	];
 });
