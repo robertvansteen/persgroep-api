@@ -33,7 +33,6 @@ class LikesTableSeeder extends Seeder
 
         $this->command->info('Seeding a random amount of likes per story from random users...');
 
-        $this->likes = [];
         $this->userCount = App\User::count();
 
         App\Story::all()->each(function($story) {
@@ -44,18 +43,15 @@ class LikesTableSeeder extends Seeder
             $likes = $this->makeLikes($story->id, $amount);
 
             if ($likes instanceof App\Like) {
-                $this->likes[] = $likes;
-                return;
+				$this->seedLike($likes);
             }
 
-            foreach($likes as $like) {
-                $this->likes[] = $like;
-            }
+			if ($likes instanceof Illuminate\Database\Eloquent\Collection) {
+	            foreach($likes as $like) {
+					$this->seedLike($like);
+	            }
+			}
         });
-
-        foreach ($this->likes as $like) {
-            $this->seedLike($like);
-        }
     }
 
     /**

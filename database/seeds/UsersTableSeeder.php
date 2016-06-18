@@ -10,7 +10,6 @@ class UsersTableSeeder extends Seeder
      *
      * @type Number
      */
-    protected $amount = 500;
 
     /**
      * Run the database seeds.
@@ -20,7 +19,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->truncate();
+
         $this->command->info('Seeding ' . $this->amount . ' users...');
+
+        factory(App\User::class)->create([
+            'email'    => 'studio@rovansteen.nl',
+            'password' => Hash::make('test123'),
+        ]);
+
         factory(App\User::class, $this->amount)->create();
     }
 }
