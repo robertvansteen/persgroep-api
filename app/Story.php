@@ -95,6 +95,12 @@ class Story extends Model
 			->groupBy('stories.id');
 	}
 
+	/**
+	 * Scope by sorting by popularity.
+	 *
+	 * @param  Query $query [description]
+	 * @return Query
+	 */
 	public function scopePopular($query) {
 		return $query->orderBy('score', 'DESC');
 	}
@@ -111,5 +117,18 @@ class Story extends Model
 			 ->withCount(['liked' => function ($query) use ($user) {
 	 		 	$query->where('user_id', $user ? $user->id : null);
 			}]);
+	}
+
+	/**
+	 * Scope the query by fetching related stories.
+	 *
+	 * @param  Query $query
+	 * @param  Story $story
+	 * @return Query 
+	 */
+	public function scopeRelated($query, Story $story) {
+		return $query->whereHas('categories', function ($query) use ($story) {
+			$query->whereIn('category_id', $story->categories->pluck('id'));
+		});
 	}
 }

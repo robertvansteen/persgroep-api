@@ -64,4 +64,74 @@ class StoryApiTest extends ApiTestCase
                 'liked_count' => 1,
             ]);
     }
+
+    /**
+     * @test
+     */
+    public function it_should_return_a_single_story()
+    {
+        $story = factory(App\Story::class)->create([
+            'title' => 'foo',
+        ]);
+
+        $this->get('/stories/1')
+            ->seeJson([
+                'title' => 'foo',
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_throw_a_404_if_a_story_does_not_exist()
+    {
+        $this->get('/stories/1')
+            ->seeStatusCode(404);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_post_a_new_story()
+    {
+        $this->authenticate()->post('/stories', [
+            'title' => 'foo',
+            'body'  => 'bar',
+        ])->seeStatusCode(201);
+
+        $this->get('/stories/1')
+            ->seeJson([
+                'title' => 'foo',
+                'body'  => 'bar',
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_return_a_401_if_not_authenticated_when_posting_a_story()
+    {
+        $this->post('/stories')->seeStatusCode(401);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_update_a_story()
+    {
+        factory(App\Story::class)->create();
+        $this->authenticate()->put('/stories/1', ['title' => 'foo'])
+             ->seeStatusCode(204);
+
+        $this->get('/stories/1')->seeJson(['title' => 'foo']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_return_a_401_if_not_authenticated_when_updating_a_story()
+    {
+        factory(App\Story::class)->create();
+        $this->put('/stories/1')->seeStatusCode(401);
+    }
 }

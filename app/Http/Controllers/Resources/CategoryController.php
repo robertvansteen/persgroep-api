@@ -13,11 +13,23 @@ class CategoriesController extends Controller
 {
     use Helpers;
 
+    /**
+     * Show all the categories.
+     *
+     * @param  Request $request
+     * @return Response
+     */
     public function index(Request $request)
     {
 		return Category::all();
     }
 
+    /**
+     * Show a specific category.
+     *
+     * @param  String $id
+     * @return Response 
+     */
 	public function show($id)
 	{
 		return Category::findOrFail($id)
