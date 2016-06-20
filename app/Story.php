@@ -124,11 +124,12 @@ class Story extends Model
 	 *
 	 * @param  Query $query
 	 * @param  Story $story
-	 * @return Query 
+	 * @return Query
 	 */
 	public function scopeRelated($query, Story $story) {
 		return $query->whereHas('categories', function ($query) use ($story) {
-			$query->whereIn('category_id', $story->categories->pluck('id'));
+			$query->whereIn('category_id', $story->categories->pluck('id'))
+				  ->where('story_id', '!=', $story->id);
 		});
 	}
 }
