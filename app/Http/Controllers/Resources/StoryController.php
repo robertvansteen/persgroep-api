@@ -74,7 +74,7 @@ class StoryController extends Controller
             ->version('v1')
             ->route('api.stories.show', $story->id);
 
-        return $this->response->created($location);
+		return response($story, 201);
 	}
 
     /**

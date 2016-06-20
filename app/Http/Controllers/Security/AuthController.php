@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Security;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Config;
 use JWTAuth;
 use Dingo\Api\Routing\Helpers;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -12,6 +13,11 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class AuthController extends Controller
 {
     use Helpers;
+
+	public function __construct()
+	{
+		$this->middleware('api-auth', ['only' => ['me']]);
+	}
 
     /**
      * Authenticate the user.
@@ -37,4 +43,27 @@ class AuthController extends Controller
         // all good so return the token
         return response()->json(compact('token'));
     }
+
+	public function refresh(Request $request)
+	{
+		$token = JWTAuth::getToken();
+
+		if (!$token) {
+            return response()->json(['error' => 'token not provided'], 401);
+		}
+
+		try {
+			$token = JWTAuth::refresh($token);
+		} catch(TokenInvalidException $e) {
+            return response()->json(['error' => 'invalid token'], 401);
+		}
+
+		return response()->json(compact('token'));
+	}
+
+	public function me()
+	{
+		$user = app('Dingo\Api\Auth\Auth')->user();
+		return $user;
+	}
 }

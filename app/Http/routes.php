@@ -16,6 +16,8 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     // Authentication
     $api->post('authenticate', 'App\Http\Controllers\Security\AuthController@authenticate');
+    $api->get('auth/refresh', 'App\Http\Controllers\Security\AuthController@refresh');
+	$api->get('me', 'App\Http\Controllers\Security\AuthController@me');
 
 	// Resources
     $api->resource('stories', 'App\Http\Controllers\Resources\StoryController');
