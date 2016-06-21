@@ -14,11 +14,6 @@ class AuthController extends Controller
 {
     use Helpers;
 
-	public function __construct()
-	{
-		$this->middleware('api.auth', ['only' => ['me']]);
-	}
-
     /**
      * Authenticate the user.
      *
@@ -59,11 +54,5 @@ class AuthController extends Controller
 		}
 
 		return response()->json(compact('token'));
-	}
-
-	public function me()
-	{
-		$user = app('Dingo\Api\Auth\Auth')->user();
-		return $user;
 	}
 }

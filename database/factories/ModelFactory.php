@@ -48,3 +48,11 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
 		'name' => $faker->word,
 	];
 });
+
+$factory->define(App\Assignment::class, function (Faker\Generator $faker) {
+	return [
+		'title'       => $faker->sentence,
+		'description' => $faker->paragraph(3),
+        'image_url'   => 'https://unsplash.it/1024/1024?image=' . $faker->numberBetween(1, 1000),
+	];
+});
