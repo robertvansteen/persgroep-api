@@ -16,7 +16,7 @@ class AuthController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('api-auth', ['only' => ['me']]);
+		$this->middleware('api.auth', ['only' => ['me']]);
 	}
 
     /**

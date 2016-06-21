@@ -35,11 +35,6 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
         ],
-
-		'api-auth' => [
-			'api.auth',
-			\Tymon\JWTAuth\Middleware\RefreshToken::class,
-		]
     ];
 
     /**

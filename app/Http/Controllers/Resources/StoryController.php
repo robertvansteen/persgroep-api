@@ -15,7 +15,7 @@ class StoryController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware('api-auth', ['only' => ['store', 'update']]);
+		$this->middleware('api.auth', ['only' => ['store', 'update']]);
 	}
 
     /**
