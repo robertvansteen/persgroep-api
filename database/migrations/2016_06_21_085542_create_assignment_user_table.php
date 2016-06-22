@@ -13,9 +13,8 @@ class CreateAssignmentUserTable extends Migration
     public function up()
     {
 		Schema::create('assignment_user', function (Blueprint $table) {
-            $table->increments('id');
-			$table->integer('assignment_id')->unsigned();
-			$table->integer('user_id')->unsigned();
+			$table->integer('assignment_id')->unsigned()->index();
+			$table->integer('user_id')->unsigned()->index();
 			$table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
 
@@ -26,6 +25,8 @@ class CreateAssignmentUserTable extends Migration
 			$table->foreign('user_id')
 				  ->references('id')->on('users')
 				  ->onDelete('cascade');
+
+			$table->primary(['assignment_id', 'user_id']);
         });
     }
 

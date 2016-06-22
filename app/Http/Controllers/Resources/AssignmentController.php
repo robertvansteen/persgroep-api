@@ -14,12 +14,45 @@ class AssignmentController extends Controller
 
 	public function index(Request $request)
 	{
-		$status = $request->status ?: 'open';
+		$query = Assignment::query();
+		$user = app('Dingo\Api\Auth\Auth')->user();
 
-		$assignments = Assignment::where('status', $status)
-			->paginate(25);
+		if ($request->has('status')) {
+			$query->where('status', $request->status);
+		}
+
+		if ($user) {
+			$query->with('users');
+		}
+
+		$assignments = $query->get();
+
+		if ($user) {
+			$assignments = $assignments->map(function ($assignment) use ($user) {
+				$pivot = $assignment->users->find($user->id);
+				$assignment->subscribe_status = ($pivot)
+					? $pivot->pivot->status
+					: null;
+				return $assignment;
+			});
+		}
 
 		return $assignments;
+	}
+
+	public function show($id)
+	{
+		$user = app('Dingo\Api\Auth\Auth')->user();
+		$assignment = Assignment::with('users')->findOrFail($id);
+		$pivot = $user ? $assignment->users->find($user->id) : null;
+
+		if (!$user || !$pivot) {
+			$assignment->subscribe_status = null;
+			return $assignment;
+		}
+
+		$assignment->subscribe_status = $pivot->pivot->status;
+		return $assignment;
 	}
 
 	public function subscribe(Request $request, $id)

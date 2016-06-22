@@ -24,7 +24,7 @@ class UserController extends Controller
 		return app('Dingo\Api\Auth\Auth')->user();
 	}
 
-	public function assignments()
+	public function assignments(Request $requeset)
 	{
 		$user = app('Dingo\Api\Auth\Auth')->user();
 		return $user->assignments;
