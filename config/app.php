@@ -149,11 +149,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /**
-         * API service provider
-         */
-        Dingo\Api\Provider\LaravelServiceProvider::class,
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -167,6 +162,7 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         willvincent\Feeds\FeedsServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+		ByCedric\Allay\Providers\LaravelServiceProvider::class,
 
     ],
 
@@ -213,7 +209,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'API' => Dingo\Api\Facade\API::class,
         'Feeds' => willvincent\Feeds\Facades\FeedsFacade::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,

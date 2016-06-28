@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dbe68d9585fbfb04e5edde853162f60b",
-    "content-hash": "c49833ddb079076efdd53b7140a87f83",
+    "hash": "8760e188719d48c8df058bc38387bb11",
+    "content-hash": "150c124953b4c088ff5be33db6b97587",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -59,6 +59,62 @@
                 "laravel"
             ],
             "time": "2016-02-11 18:38:09"
+        },
+        {
+            "name": "bycedric/allay",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/byCedric/Allay.git",
+                "reference": "b96859c4c9b31d4ed88ea7556fa926dfe48109e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/byCedric/Allay/zipball/b96859c4c9b31d4ed88ea7556fa926dfe48109e2",
+                "reference": "b96859c4c9b31d4ed88ea7556fa926dfe48109e2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^5.1",
+                "illuminate/database": "^5.1",
+                "illuminate/http": "^5.1",
+                "illuminate/support": "^5.1",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "illuminate/routing": "^5.1",
+                "laravel/lumen-framework": "^5.1",
+                "mockery/mockery": "^0.9",
+                "phpunit/phpunit": "^5.0",
+                "satooshi/php-coveralls": "^0.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ByCedric\\Allay\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cedric van Putten",
+                    "email": "me@bycedric.com",
+                    "homepage": "http://bycedric.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Build scalable and restful API's, in minutes.",
+            "homepage": "http://github.com/bycedric/allay",
+            "keywords": [
+                "allay",
+                "api",
+                "bycedric",
+                "laravel"
+            ],
+            "time": "2016-06-23 13:41:36"
         },
         {
             "name": "classpreloader/classpreloader",
