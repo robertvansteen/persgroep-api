@@ -33,4 +33,6 @@ $api->version('v1', function ($api) {
 
 	$api->resource('assignments', 'App\Http\Controllers\Resources\AssignmentController');
 	$api->post('assignments/{id}/subscribe', 'App\Http\Controllers\Resources\AssignmentController@subscribe');
+	$api->post('assignments/{id}/unsubscribe', 'App\Http\Controllers\Resources\AssignmentController@unsubscribe');
+	$api->post('assignments/{id}/reject', 'App\Http\Controllers\Resources\AssignmentController@reject');
 });

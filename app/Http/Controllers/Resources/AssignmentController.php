@@ -55,7 +55,7 @@ class AssignmentController extends Controller
 		return $assignment;
 	}
 
-	public function subscribe(Request $request, $id)
+	public function subscribe($id)
 	{
 		$user = app('Dingo\Api\Auth\Auth')->user();
 		$assignment = Assignment::findOrFail($id);
@@ -63,4 +63,22 @@ class AssignmentController extends Controller
 
 		return $this->created();
 	}
+
+    public function unsubscribe($id)
+    {
+        $user = app('Dingo\Api\Auth\Auth')->user();
+        $assignment = Assignment::findOrFail($id);
+        $assignment->users()->detach($user->id);
+
+        return $this->noContent();
+    }
+
+    public function reject($id)
+    {
+        $user = app('Dingo\Api\Auth\Auth')->user();
+        $assignment = Assignment::findOrFail($id);
+        $assignment->users()->updateExistingPivot($user->id, ['status' => 'rejected']);
+
+        return $this->noContent();
+    }
 }
