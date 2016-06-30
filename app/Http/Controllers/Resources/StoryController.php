@@ -43,6 +43,7 @@ class StoryController extends Controller
     public function show($id)
     {
         $story = Story::with('author')
+            ->withLikes($this->auth->user())
 			->findOrFail($id);
 
 		$story->related = Story::related($story)

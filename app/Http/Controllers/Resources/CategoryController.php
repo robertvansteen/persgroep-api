@@ -9,7 +9,7 @@ use DB;
 use App\Category;
 use Dingo\Api\Routing\Helpers;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     use Helpers;
 
@@ -28,7 +28,7 @@ class CategoriesController extends Controller
      * Show a specific category.
      *
      * @param  String $id
-     * @return Response 
+     * @return Response
      */
 	public function show($id)
 	{

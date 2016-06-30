@@ -8,6 +8,15 @@ use Cache;
 class Category extends Model
 {
 	/**
+	 * Specify the fillable properties.
+	 *
+	 * @type {Array}
+	 */
+	protected $fillable = [
+		'name',
+	];
+
+	/**
 	 * Specify the hidden properties.
 	 *
 	 * @type {Array}

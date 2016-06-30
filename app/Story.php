@@ -114,8 +114,8 @@ class Story extends Model
 	public function scopeWithLikes($query, $user = null) {
 		return $query
 			->withCount('likes')
-			 ->withCount(['liked' => function ($query) use ($user) {
-	 		 	$query->where('user_id', $user ? $user->id : null);
+			->withCount(['liked' => function ($query) use ($user) {
+				$query->where('user_id', $user ? $user->id : null);
 			}]);
 	}
 

@@ -41,4 +41,13 @@ class User extends Authenticatable
     public function likes() {
         return $this->hasMany('App\Like');
     }
+
+	/**
+	 * Defines the assignments relationship.
+	 *
+	 * @return Illuminate\Database\Eloquent\BelongsToMany
+	 */
+	public function assignments() {
+		return $this->belongsToMany('App\Assignment');
+	}
 }
