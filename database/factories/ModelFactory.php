@@ -11,12 +11,6 @@
 |
 */
 
-$images = json_decode(file_get_contents('database/seeds/data/unsplash.json'));
-
-function getRandomImage($images, $width, $height) {
-    return 'https://unsplash.it/' . $width . '/' . $height . '?image=' . $images[array_rand($images)]->id;
-}
-
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -26,12 +20,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Story::class, function (Faker\Generator $faker) use ($images) {
+$factory->define(App\Story::class, function (Faker\Generator $faker) {
     return [
         'title'     => $faker->sentence,
 		'excerpt'   => $faker->paragraph(2),
         'body'      => $faker->paragraph(20),
-        'image_url' => getRandomImage($images, 768, 768),
+        'image_url' => getRandomImage(768, 768),
         'user_id'   => function () {
             return factory(App\User::class)->create()->id;
         }
@@ -55,10 +49,10 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
 	];
 });
 
-$factory->define(App\Assignment::class, function (Faker\Generator $faker) use ($images) {
+$factory->define(App\Assignment::class, function (Faker\Generator $faker) {
 	return [
 		'title'       => $faker->sentence,
 		'description' => $faker->paragraph(3),
-        'image_url'   => getRandomImage($images, 768, 768),
+        'image_url'   => getRandomImage(768, 768),
 	];
 });
