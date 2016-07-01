@@ -12,7 +12,7 @@ env:
   global:
     - APP_ENV=testing
     - APP_DEBUG=true
-    - APP_KEY=xxxx
+    - APP_KEY=base64:L67DQxZgtrsj5tB4in+VX00lbkrpw63hZ0DtN5x3IE4=
 
 before_script:
   - composer install --no-interaction
