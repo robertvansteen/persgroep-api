@@ -24,7 +24,6 @@ class CategoryStoryController extends Controller
 			->withLikes()
 			->with('categories')
 			->with('author')
-			->remember(60)
 			->paginate($request->input('limit') ?: 25);
 
 		return $stories;

@@ -36,7 +36,6 @@ class CategoryController extends Controller
 			->with('stories')
 			->popular()
 			->withLikes()
-			->remember(60)
 			->paginate($request->input('limit') ?: 25);
 	}
 }
