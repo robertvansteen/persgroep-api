@@ -9,16 +9,9 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class StoryLiked extends Event implements ShouldBroadcast
+class StoryUnliked extends Event implements ShouldBroadcast
 {
     use SerializesModels;
-
-	/**
-	 * The like of the event.
-	 *
-	 * @var Like
-	 */
-	public $like;
 
 	/**
 	 * The story of the event.
@@ -34,9 +27,7 @@ class StoryLiked extends Event implements ShouldBroadcast
      */
     public function __construct(Like $like)
     {
-		$user = Auth::user();
 		$this->story = Story::findOrFail($like->story_id);
-		$this->like = $like;
     }
 
     /**
@@ -56,6 +47,6 @@ class StoryLiked extends Event implements ShouldBroadcast
 	 */
 	public function broadcastAs()
 	{
-	    return 'story.liked';
+	    return 'story.unliked';
 	}
 }

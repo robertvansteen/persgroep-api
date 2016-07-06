@@ -35,7 +35,6 @@ class CategoryController extends Controller
 		return Category::findOrFail($id)
 			->with('stories')
 			->popular()
-			->withLikes()
 			->paginate($request->input('limit') ?: 25);
 	}
 }

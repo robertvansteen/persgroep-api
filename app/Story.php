@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+use Auth;
 
 class Story extends Model
 {
@@ -24,6 +25,7 @@ class Story extends Model
 	 */
 	protected $hidden = [
 		'pivot',
+		'likes',
 	];
 
 	/**
@@ -33,9 +35,29 @@ class Story extends Model
 	 */
 	protected $casts = [
 		'id'          => 'string',
+		'user_id'     => 'string',
 		'score'       => 'float',
-		'likes_count' => 'integer',
-		'liked_count' => 'integer',
+	];
+
+	/**
+	 * The accessors to append to the model's array form.
+	 *
+	 * @var array
+	 */
+	protected $appends = [
+		'liked',
+		'like_count',
+	];
+
+	/**
+	 * The relationships to eager load the model with.
+	 *
+	 * @var array
+	 */
+	protected $with = [
+		'likes',
+		'author',
+		'categories',
 	];
 
 	/**
@@ -53,15 +75,6 @@ class Story extends Model
 	 * @return \Illuminate\Database\Eloquent\HasMany
 	 */
 	public function likes() {
-		return $this->hasMany('App\Like');
-	}
-
-	/**
-	 * Define the likes relationship.
-	 *
-	 * @return \Illuminate\Database\Eloquent\HasMany
-	 */
-	public function liked() {
 		return $this->hasMany('App\Like');
 	}
 
@@ -106,20 +119,6 @@ class Story extends Model
 	}
 
 	/**
-	 * Scope the query to include the like for the current user.
-	 *
-	 * @param  Illuminate\Database\Query $query
-	 * @return  Illuminate\Database\Query
-	 */
-	public function scopeWithLikes($query, $user = null) {
-		return $query
-			->withCount('likes')
-			->withCount(['liked' => function ($query) use ($user) {
-				$query->where('user_id', $user ? $user->id : null);
-			}]);
-	}
-
-	/**
 	 * Scope the query by fetching related stories.
 	 *
 	 * @param  Query $query
@@ -131,5 +130,31 @@ class Story extends Model
 			$query->whereIn('category_id', $story->categories->pluck('id'))
 				  ->where('story_id', '!=', $story->id);
 		});
+	}
+
+	/**
+	 * Accessor for the liked attribute.
+	 *
+	 * @return Boolean
+	 */
+	public function getLikedAttribute() {
+		$user = app('Dingo\Api\Auth\Auth')->user();
+
+		if (!$user) return false;
+
+		$result = $this->likes->search(function ($value, $key) use ($user) {
+			return $value->user_id === $user->id;
+		});
+
+		return is_int($result);
+	}
+
+	/**
+	 * Accessor for the like count attribute.
+	 *
+	 * @return Boolean
+	 */
+	public function getLikeCountAttribute() {
+		return count($this->likes);
 	}
 }

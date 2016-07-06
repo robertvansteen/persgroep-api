@@ -27,7 +27,6 @@ class StoryController extends Controller
     public function index(Request $request)
     {
 		$stories = Story::with('author')
-			->withLikes($this->auth->user())
 			->orderBy('score', 'DESC')
 			->paginate(25);
 
@@ -42,21 +41,18 @@ class StoryController extends Controller
      */
     public function show($id)
     {
-        $story = Story::with('author')
-            ->withLikes($this->auth->user())
-			->findOrFail($id);
+        $story = Story::findOrFail($id);
 
 		$story->related = Story::related($story)
             ->with('categories')
             ->with('author')
-			->withLikes($this->auth->user())
-			->take(5)
+			->take(10)
 			->get();
 
 		return $story;
     }
 
-    /**d
+    /**
      * Store a new story.
      *
      * @param  Request $request

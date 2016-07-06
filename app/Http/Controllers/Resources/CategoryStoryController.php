@@ -21,7 +21,6 @@ class CategoryStoryController extends Controller
 			->stories()
 			->wherePivot('category_id', $categoryId)
 			->popular()
-			->withLikes()
 			->with('categories')
 			->with('author')
 			->paginate($request->input('limit') ?: 25);

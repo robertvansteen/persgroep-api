@@ -6,7 +6,7 @@ const redis = new Redis();
 redis.subscribe('events');
 redis.on('message', (channel, message) => {
 	const payload = JSON.parse(message);
-	console.log(payload);
+	console.log('[New event]', payload.event);
 	io.emit(payload.event, payload.data);
 });
 

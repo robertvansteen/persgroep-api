@@ -1,5 +1,6 @@
 <?php
 
+use App\Like;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+		Like::flushEventListeners();
 		ini_set('memory_limit','256M');
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         $this->call(UsersTableSeeder::class);

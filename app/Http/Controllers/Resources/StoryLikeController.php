@@ -13,18 +13,31 @@ class StoryLikeController extends Controller
 {
     use Helpers;
 
+	public function __construct()
+	{
+		$this->middleware('api.auth');
+	}
+
 	public function store($id)
 	{
-		return Like::create([
-			'user_id'  => 1,
+		$user = $this->auth->user();
+
+		return Like::firstOrCreate([
+			'user_id'  => $user->id,
 			'story_id' => $id,
 		]);
 	}
 
 	public function destroy($id)
 	{
-		return Like::where('user_id', 1)
+		$user = $this->auth->user();
+
+		$like = Like::where('user_id', $user->id)
 					->where('story_id', $id)
-					->delete();
+					->first();
+
+		if ($like) $like->delete();
+
+		return $this->noContent();
 	}
 }

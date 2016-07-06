@@ -26,8 +26,6 @@ $api->version('v1', function ($api) {
     $api->resource('stories.likes', 'App\Http\Controllers\Resources\StoryLikeController');
     $api->delete('stories/{stories}/likes', 'App\Http\Controllers\Resources\StoryLikeController@destroy');
 
-    $api->resource('likes', 'App\Http\Controllers\Resources\LikeController');
-
 	$api->resource('categories', 'App\Http\Controllers\Resources\CategoryController');
 	$api->resource('categories.stories', 'App\Http\Controllers\Resources\CategoryStoryController');
 

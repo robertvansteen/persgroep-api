@@ -25,7 +25,14 @@ class Like extends Model
 		'user_id'  => 'string',
 	];
 
-	protected $with = ['user', 'story'];
+	/**
+	 * The relationships to eager load the model with.
+	 *
+	 * @var array
+	 */
+	protected $with = [
+		'user',
+	];
 
 	/**
 	 * Define the user relationship.
