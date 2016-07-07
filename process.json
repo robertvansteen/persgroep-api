@@ -1,0 +1,4 @@
+{
+  "script": "socket.js",
+  "name": "persgroep-api-socket",
+}
