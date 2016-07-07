@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 
 use DB;
 use App\Story;
+use App\DraftConverter;
 use Dingo\Api\Routing\Helpers;
 
 class StoryController extends Controller
@@ -65,6 +66,9 @@ class StoryController extends Controller
 		$story = new Story();
 		$story->fill($request->all());
 		$story->author()->associate($user);
+
+		$draft = new DraftConverter($request->draft, $request->allFiles());
+		$story->body = $draft->export();
         $story->save();
 
         $location = app('api.url')

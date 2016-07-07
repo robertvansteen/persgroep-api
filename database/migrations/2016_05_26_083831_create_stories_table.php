@@ -17,7 +17,8 @@ class CreateStoriesTable extends Migration
             $table->string('atom_id')->nullable();
             $table->string('title');
 			$table->text('excerpt')->nullable();
-            $table->text('body');
+            $table->text('body')->nullable();
+			$table->text('draft')->nullable();
             $table->string('image_url')->nullable();
         	$table->integer('user_id')->unsigned();
             $table->timestamps();
