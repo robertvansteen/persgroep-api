@@ -1,4 +1,14 @@
-const server = require('http').Server();
+const fs = require('fs');
+
+const pkey = fs.readFileSync('./server.key');
+const pcert = fs.readFileSync('./server.crt');
+
+const options = {
+    key: pkey,
+    cert: pcert
+};
+
+const server = require('https').createServer(options);
 const io = require('socket.io')(server);
 const Redis = require('ioredis');
 const redis = new Redis();
@@ -10,4 +20,4 @@ redis.on('message', (channel, message) => {
 	io.emit(payload.event, payload.data);
 });
 
-server.listen(3000, () => 'Socket connection is running on port 3000');
+server.listen(3000, () => console.log('Socket connection is running on port 3000'));
