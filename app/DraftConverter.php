@@ -186,7 +186,7 @@ class DraftConverter
 	 * @return String
 	 */
 	protected function convertStyleToHTML($style, $position) {
-		if (!in_array($style, $this->styles)) '';
+		if (!array_key_exists($style, $this->styles)) return '';
 
 		$element = $this->styles[$style];
 		$slash = $position === 'suffix' ? '/' : '';
@@ -201,7 +201,7 @@ class DraftConverter
 	 * @return String
 	 */
 	protected function convertTypeToHTML($type, $position) {
-		if (!in_array($type, $this->types)) return '';
+		if (!array_key_exists($type, $this->types)) return '';
 
 		$element = $this->types[$type];
 		$slash = $position === 'suffix' ? '/' : '';
@@ -216,9 +216,10 @@ class DraftConverter
 	 * @return String
 	 */
 	protected function convertBlockToHtml($block) {
+		$text = $block->text;
 		$prefix = $this->convertTypeToHTML($block->type, 'prefix');
-		$text = $this->applyInlineStyles($block->text, $block->inlineStyleRanges);
-		$text = $this->applyEntities($block->text, $block->entityRanges);
+		$text = $this->applyInlineStyles($text, $block->inlineStyleRanges);
+		$text = $this->applyEntities($text, $block->entityRanges);
 		$suffix = $this->convertTypeToHTML($block->type, 'suffix');
 		return $prefix . $text . $suffix;
 	}
