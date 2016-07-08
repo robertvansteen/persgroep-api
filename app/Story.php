@@ -4,6 +4,7 @@ namespace App;
 
 use DB;
 use Auth;
+use JWTAuth;
 
 class Story extends Model
 {
@@ -138,9 +139,11 @@ class Story extends Model
 	 * @return Boolean
 	 */
 	public function getLikedAttribute() {
-		$user = app('Dingo\Api\Auth\Auth')->user();
-
-		if (!$user) return false;
+		try {
+			$user = JWTAuth::parseToken()->authenticate();
+		} catch(\Tymon\JWTAuth\Exceptions\JWTException $e) {
+			return false;
+		}
 
 		$result = $this->likes->search(function ($value, $key) use ($user) {
 			return $value->user_id === $user->id;
