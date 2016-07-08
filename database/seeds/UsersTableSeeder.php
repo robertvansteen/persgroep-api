@@ -10,7 +10,7 @@ class UsersTableSeeder extends Seeder
      *
      * @type Number
      */
-     protected $amount = 50;
+     protected $amount = 200;
 
     /**
      * Run the database seeds.

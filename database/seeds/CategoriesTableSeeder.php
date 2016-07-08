@@ -17,20 +17,38 @@ class CategoriesTableSeeder extends Seeder
 
 		DB::table('categories')->insert([
 			[
-				'id'   => 'headlines',
-				'name' => 'Headlines',
+				'id'   => 'news',
+				'name' => 'News',
 				'created_at' => \Carbon\Carbon::now(),
 				'updated_at' => \Carbon\Carbon::now(),
 			],
 			[
-				'id'   => 'cultuur',
-				'name' => 'Cultuur',
+				'id'   => 'culture',
+				'name' => 'Culture',
 				'created_at' => \Carbon\Carbon::now(),
 				'updated_at' => \Carbon\Carbon::now(),
 			],
 			[
 				'id'   => 'sport',
 				'name' => 'Sport',
+				'created_at' => \Carbon\Carbon::now(),
+				'updated_at' => \Carbon\Carbon::now(),
+			],
+			[
+				'id'   => 'music',
+				'name' => 'Music',
+				'created_at' => \Carbon\Carbon::now(),
+				'updated_at' => \Carbon\Carbon::now(),
+			],
+			[
+				'id'   => 'fashion',
+				'name' => 'Fashion',
+				'created_at' => \Carbon\Carbon::now(),
+				'updated_at' => \Carbon\Carbon::now(),
+			],
+			[
+				'id'   => 'tech',
+				'name' => 'Tech',
 				'created_at' => \Carbon\Carbon::now(),
 				'updated_at' => \Carbon\Carbon::now(),
 			],
