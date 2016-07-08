@@ -26,9 +26,10 @@ $factory->define(App\Story::class, function (Faker\Generator $faker) {
 		'excerpt'   => $faker->paragraph(2),
         'body'      => $faker->paragraph(20),
         'image_url' => getRandomImage(768, 768),
+		'created_at' => $faker->dateTimeThisYear,
         'user_id'   => function () {
             return factory(App\User::class)->create()->id;
-        }
+        },
     ];
 });
 
